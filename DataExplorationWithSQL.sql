@@ -1,12 +1,14 @@
+-- EXPLORING DATA
+
 SELECT * 
 FROM CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY 3,4;
 
---Select *
---FROM CovidVaccinations
---WHERE continent IS NOT NULL
---ORDER BY 3,4
+Select *
+FROM CovidVaccinations
+WHERE continent IS NOT NULL
+ORDER BY 3,4;
 
 -- SELECT DATA THAT I'M GOING TO USE
 
@@ -83,7 +85,7 @@ AND DEA.date = VAC.date
 WHERE DEA.continent IS NOT NULL
 )
 SELECT * , (RollingPeopleVaccinated/Population)*100
-FROM popvsvac
+FROM popvsvac;
 
 
 
@@ -96,24 +98,24 @@ FROM CovidDeaths DEA
 JOIN CovidVaccinations VAC
 ON DEA.location = VAC.location
 AND DEA.date = VAC.date
-WHERE DEA.continent IS NOT NULL
+WHERE DEA.continent IS NOT NULL;
 
 
 CREATE VIEW INFECTIONRATE as
 Select Location, MAX(total_cases) HighestInfectionCount, population, MAX((total_cases/population))*100 as InfectionRate
 From CovidDeaths
 WHERE continent IS NOT NULL
-GROUP BY location, population
+GROUP BY location, population;
 
 
 CREATE VIEW DEATHRATE as
 Select Location, MAX(CAST(total_deaths AS INT)) HighestDeathsCount, population, MAX((total_cases/population))*100 as Death_Rate
 From CovidDeaths
 WHERE continent IS NOT NULL
-GROUP BY location, population
+GROUP BY location, population;
 
 CREATE VIEW CONTINENTSDEATHS as
 Select location, MAX(CAST(total_deaths AS INT)) HighestDeathsCount
 From CovidDeaths
 WHERE continent IS NULL
-GROUP BY location
+GROUP BY location;
